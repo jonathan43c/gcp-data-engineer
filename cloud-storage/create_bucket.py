@@ -1,18 +1,11 @@
-import argparse
 from google.cloud import storage
 
 def main():
-    parser = argparse.ArgumentParser(description="Create a GCP bucket.")
+    bucket_name = input("Ingresa el nombre del bucket: ").strip()
 
-    parser.add_argument(
-        "bucket_name",
-        type=str,
-        help="Name of the bucket to create"
-    )
-
-    args = parser.parse_args()
-
-    bucket_name = args.bucket_name
+    if not bucket_name:
+        print("Error: el nombre del bucket no puede estar vacío.")
+        return
 
     print(f"Bucket name received: {bucket_name}")
 
