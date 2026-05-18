@@ -5,9 +5,9 @@ def run():
     # Configuración del pipeline
     options = PipelineOptions(
         runner="DataflowRunner",  # Cambiar a DataflowRunner para GCP. DataflowRunner es para que se corra en Cloud y DirectRunner es para que corra local
-        project="gcp-data-engineer-curso-04", 
+        project="gcp-data-engineer-curso-05", 
         region="us-central1",
-        temp_location="gs://gcp-data-engineer-curso-04b/temp"
+        temp_location="gs://gcp-bucket-curso-05/temp"
     )
 
     with beam.Pipeline(options=options) as p:
@@ -22,7 +22,7 @@ def run():
             )
             | "Contar palabras" >> beam.combiners.Count.PerElement()
             | "Guardar resultados" >> beam.io.WriteToText(
-                "gs://gcp-data-engineer-curso-04b/output/wordcount"
+                "gs://gcp-bucket-curso-05/output/wordcount"
             )
         )
 

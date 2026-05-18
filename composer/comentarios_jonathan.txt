@@ -1,0 +1,57 @@
+python3 wordcount.py \             #Ejecuta tu pipeline Beam:wordcount.py
+  --runner DataflowRunner \              # Le dice a Beam:“No corras local.Corre usando Google Cloud Dataflow”
+  --project gcp-data-engineer-curso-05 \              # Define el PROJECT_ID donde:correrá Dataflow,se cobrarán recursos,vivirán jobs/APIs
+  --region us-central1 \              #Dónde se crearán los workers cloud.
+  --staging_location gs://gcs-bucket-curso-05/staging/ \              #Beam sube aquí:código Python,dependencias,paquetes,archivos necesarios osea es una “zona de preparación”
+  --temp_location gs://gcs-bucket-curso-05/temp/ \              #Archivos temporales del pipeline.Ejemplo:shuffle,metadata,temp files
+  --template_location gs://gcs-bucket-curso-05/templates/wordcount_template              #LA MÁS IMPORTANTE. Aquí guarda un:Dataflow Template. Un template es:pipeline reutilizable ya empaquetado. Sin template Cada vez: ejecutas código Beam manualmente. Con template Puedes:Composer → lanzar template
+
+
+
+
+
+
+
+
+
+
+
+
+  otros comentarios:
+
+  Flujo real mental
+
+Paso 1
+Tu código Beam:
+
+Read
+→ Transform
+→ Count
+→ Write
+
+Paso 2
+Dataflow lo empaqueta.
+
+Paso 3
+Guarda template:
+
+gs://bucket/templates/wordcount_template
+
+Paso 4
+Composer/Airflow puede lanzar ese template cuando quiera.
+
+Arquitectura real
+Apache Beam code
+        ↓
+Dataflow Template
+        ↓
+Composer/Airflow
+        ↓
+Ejecutar jobs automáticamente
+Lo MÁS importante conceptualmente
+
+Este comando NO ejecuta el pipeline final para negocio.
+
+Este comando:
+
+CREA la plantilla reutilizable
